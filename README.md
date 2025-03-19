@@ -56,8 +56,7 @@ Orientações gerais de como configurar, executar e testar
 
 ### **Backend**
 
-[![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://www.java.com) - v.17
-
+- [![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://www.java.com) - v.17
 - ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white) - v.3.4.3
 - ![Jakarta Persistence](https://img.shields.io/badge/Jakarta%20Persistence-007396?style=for-the-badge&logo=jakartaee&logoColor=white) - v.3.1.0
 - ![Lombok](https://img.shields.io/badge/Lombok-CA2136?style=for-the-badge&logo=lombok&logoColor=white) - v.1.18.26
@@ -71,7 +70,7 @@ Orientações gerais de como configurar, executar e testar
 
 ### **Frontend**
 
-- ![[Angular][Angular.io]][Angular-url] - v.19
+- [![Angular](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)](https://angular.io) - v.19
 - ![PrimeNG](https://img.shields.io/badge/PrimeNG-4479A1?style=for-the-badge&logo=primeng&logoColor=white) - v.19
 - ![RxJS](https://img.shields.io/badge/RxJS-B7178C?style=for-the-badge&logo=reactivex&logoColor=white) - v.7.8
 - ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white) - v.5
