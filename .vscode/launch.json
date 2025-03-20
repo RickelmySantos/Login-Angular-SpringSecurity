@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-LoginApiApplication<login-api>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "rs.desenvolvimento.login_api.LoginApiApplication",
+      "projectName": "login-api",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
