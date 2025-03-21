@@ -13,9 +13,9 @@ import rs.desenvolvimento.login_api.core.excptions.JwtTokenException;
 
 @Component
 public class JwtUtil {
+
   private SecretKey jwtSecret;
   private final long expiration;
-
 
   public JwtUtil(@Value("${jwt.secret}") String secretKey,
       @Value("${jwt.expiration}") long expiration) {
@@ -25,7 +25,8 @@ public class JwtUtil {
 
   public String geracaoJwtToken(String username) {
     return Jwts.builder().subject(username).issuedAt(new Date())
-        .expiration(new Date((new Date()).getTime() + this.expiration)).signWith(this.jwtSecret)
+        .expiration(new Date(System.currentTimeMillis() + this.expiration))
+        .signWith(this.jwtSecret)
         .compact();
   }
 
@@ -44,7 +45,7 @@ public class JwtUtil {
           .getSubject();
     } catch (ExpiredJwtException e) {
       throw new JwtTokenException("Token expirado! por favor faça login novamente");
-    } catch (@SuppressWarnings("deprecation") UnsupportedJwtException | MalformedJwtException e) {
+    } catch (UnsupportedJwtException | MalformedJwtException e) {
       throw new JwtTokenException("Token inválido ! Autenticação falhou");
     } catch (Exception e) {
       throw new JwtTokenException("Autenticação falhou" + e.getMessage());

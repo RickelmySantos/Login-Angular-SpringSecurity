@@ -31,20 +31,19 @@ public class SecurityFilter {
     return new MvcRequestMatcher.Builder(introspector);
   }
 
-
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc)
       throws Exception {
-    SecurityFilter.log.debug("LOADED >>>>> SecurityFilterChain");
+    SecurityFilter.log.info("LOADED >>>>> SecurityFilterChain");
     http.csrf(csrf -> csrf.disable());
     http.cors(cors -> Customizer.withDefaults());
     http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()));
 
     http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-        .requestMatchers(mvc.pattern("/cadastrar")).permitAll().anyRequest().authenticated())
+        .requestMatchers(mvc.pattern("auth/cadastrar")).permitAll()
+        .requestMatchers(mvc.pattern("auth/login")).permitAll().anyRequest().authenticated())
         .sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
     return http.build();
 
   }
