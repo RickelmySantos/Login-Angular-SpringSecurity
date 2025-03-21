@@ -5,10 +5,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import rs.desenvolvimento.login_api.core.excptions.UsuarioException;
 import rs.desenvolvimento.login_api.core.seguranca.JwtUtil;
 import rs.desenvolvimento.login_api.modelos.dtos.UserDto;
 import rs.desenvolvimento.login_api.modelos.entidades.Roles;
 import rs.desenvolvimento.login_api.modelos.entidades.User;
+import rs.desenvolvimento.login_api.modelos.enums.ERole;
 import rs.desenvolvimento.login_api.repositorios.RoleRepository;
 import rs.desenvolvimento.login_api.repositorios.UserRepository;
 
@@ -33,24 +35,33 @@ public class AuthService {
     if (user.isPresent() && this.passwordEncoder.matches(password, user.get().getPassword())) {
       return this.jwtUtil.geracaoJwtToken(username);
     }
-    throw new RuntimeException("Credenciais inválidas");
+    throw new UsuarioException("Credenciais inválidas");
   }
 
   public UserDto registrar(UserDto userDto) {
-    if (this.userRepository.findByUsername(userDto.getUsername()).isPresent()) {
-      throw new RuntimeException("Usuário já existe");
-    }
+    this.verificaSeUsuarioExiste(userDto.getUsername());
 
-    Set<Roles> roles = userDto.getRoles().stream()
-        .map(erole -> this.roleRepository.findByName(erole)
-            .orElseThrow(() -> new RuntimeException("Role não encontrada: " + erole)))
-        .collect(Collectors.toSet());
+    Set<Roles> roles = this.roles(userDto.getRoles());
 
     User user = User.builder().username(userDto.getUsername())
         .password(this.passwordEncoder.encode(userDto.getPassword())).roles(roles).build();
     User usuarioSalvo = this.userRepository.save(user);
 
     return this.userToUserDto(usuarioSalvo);
+  }
+
+  private Set<Roles> roles(Set<ERole> roles) {
+    return roles.stream().map(this::findRoleByName).collect(Collectors.toSet());
+  }
+
+  private Roles findRoleByName(ERole role) {
+    return this.roleRepository.findByName(role).orElseThrow(() -> new RuntimeException("Role não encontrada: " + role));
+  }
+
+  private void verificaSeUsuarioExiste(String username) {
+    if (this.userRepository.findByUsername(username).isPresent()) {
+      throw new UsuarioException("Usuário já existe");
+    }
   }
 
   private UserDto userToUserDto(User user) {
