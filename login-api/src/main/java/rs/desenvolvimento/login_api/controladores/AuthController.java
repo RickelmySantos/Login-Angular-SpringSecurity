@@ -19,7 +19,6 @@ public class AuthController {
     this.authService = authService;
   }
 
-
   @PostMapping("/login")
   public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
     String token = this.authService.autenticacao(request.getUsername(), request.getPassword());
@@ -28,7 +27,6 @@ public class AuthController {
 
   @PostMapping("/cadastrar")
   public ResponseEntity<UserDto> cadastrar(@RequestBody UserDto userDto) {
-    System.out.println(userDto);
     UserDto usuarioSalvo = this.authService.registrar(userDto);
     return ResponseEntity.ok(usuarioSalvo);
   }

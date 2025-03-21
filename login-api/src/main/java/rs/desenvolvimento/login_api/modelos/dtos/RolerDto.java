@@ -1,6 +1,5 @@
 package rs.desenvolvimento.login_api.modelos.dtos;
 
-import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,9 +10,7 @@ import rs.desenvolvimento.login_api.modelos.enums.ERole;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserDto {
+public class RolerDto {
   private Long id;
-  private String username;
-  private String password;
-  private Set<ERole> roles;
+  private ERole role;
 }

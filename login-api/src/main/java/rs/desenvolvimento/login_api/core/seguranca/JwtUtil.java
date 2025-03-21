@@ -1,15 +1,21 @@
 package rs.desenvolvimento.login_api.core.seguranca;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import rs.desenvolvimento.login_api.core.excptions.JwtTokenException;
+import rs.desenvolvimento.login_api.modelos.entidades.Roles;
+import rs.desenvolvimento.login_api.modelos.enums.ERole;
 
 @Component
 public class JwtUtil {
@@ -52,4 +58,17 @@ public class JwtUtil {
     }
   }
 
+  public String gerarToken(String username, Set<Roles> roles) {
+    List<ERole> rolesName = roles.stream().map(Roles::getName).collect(Collectors.toList());
+
+    return Jwts.builder().subject(username).claim("roles", rolesName).issuedAt(new Date())
+        .expiration(new Date(System.currentTimeMillis() + this.expiration)).signWith(this.jwtSecret).compact();
+  }
+
+  public Claims getClaims(String token) {
+    return Jwts.parser().verifyWith(this.jwtSecret)
+        .build()
+        .parseSignedClaims(token)
+        .getPayload();
+  }
 }

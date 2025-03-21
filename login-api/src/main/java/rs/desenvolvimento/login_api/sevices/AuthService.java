@@ -1,23 +1,29 @@
 package rs.desenvolvimento.login_api.sevices;
 
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import rs.desenvolvimento.login_api.core.seguranca.JwtUtil;
 import rs.desenvolvimento.login_api.modelos.dtos.UserDto;
+import rs.desenvolvimento.login_api.modelos.entidades.Roles;
 import rs.desenvolvimento.login_api.modelos.entidades.User;
+import rs.desenvolvimento.login_api.repositorios.RoleRepository;
 import rs.desenvolvimento.login_api.repositorios.UserRepository;
 
 @Service
 public class AuthService {
 
   private final UserRepository userRepository;
+  private final RoleRepository roleRepository;
   private final PasswordEncoder passwordEncoder;
   private final JwtUtil jwtUtil;
 
-  public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder,
+  public AuthService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder,
       JwtUtil jwtUtil) {
     this.userRepository = userRepository;
+    this.roleRepository = roleRepository;
     this.passwordEncoder = passwordEncoder;
     this.jwtUtil = jwtUtil;
   }
@@ -34,13 +40,18 @@ public class AuthService {
     if (this.userRepository.findByUsername(userDto.getUsername()).isPresent()) {
       throw new RuntimeException("Usuário já existe");
     }
+
+    Set<Roles> roles = userDto.getRoles().stream()
+        .map(erole -> this.roleRepository.findByName(erole)
+            .orElseThrow(() -> new RuntimeException("Role não encontrada: " + erole)))
+        .collect(Collectors.toSet());
+
     User user = User.builder().username(userDto.getUsername())
-        .password(this.passwordEncoder.encode(userDto.getPassword())).build();
+        .password(this.passwordEncoder.encode(userDto.getPassword())).roles(roles).build();
     User usuarioSalvo = this.userRepository.save(user);
 
     return this.userToUserDto(usuarioSalvo);
   }
-
 
   private UserDto userToUserDto(User user) {
     return UserDto.builder().username(user.getUsername()).password(user.getPassword()).build();

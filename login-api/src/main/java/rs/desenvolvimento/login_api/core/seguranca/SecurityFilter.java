@@ -13,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
@@ -24,6 +25,12 @@ public class SecurityFilter {
   @PostConstruct
   public void init() {
     SecurityFilter.log.info("LOADED >>>>> WebSecurityConfig");
+  }
+
+  private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+  public SecurityFilter(JwtAuthenticationFilter jwtAuthenticationFilter) {
+    this.jwtAuthenticationFilter = jwtAuthenticationFilter;
   }
 
   @Bean
@@ -42,8 +49,11 @@ public class SecurityFilter {
     http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
         .requestMatchers(mvc.pattern("auth/cadastrar")).permitAll()
         .requestMatchers(mvc.pattern("auth/login")).permitAll().anyRequest().authenticated())
+
         .sessionManagement(
-            session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+            session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .addFilterBefore(this.jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
     return http.build();
 
   }
