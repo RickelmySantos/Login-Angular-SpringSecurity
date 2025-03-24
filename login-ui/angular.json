@@ -23,13 +23,13 @@
                         "polyfills": ["zone.js"],
                         "tsConfig": "tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
-                        "assets": [
-                            {
-                                "glob": "**/*",
-                                "input": "public"
-                            }
+                        "assets": ["src/favicon.png", "src/favicon.svg", "src/assets"],
+                        "styles": [
+                            "src/assets/styles/styles.scss",
+                            "primeflex/primeflex.css",
+                            { "input": "src/assets/styles/template/themes/light/theme.scss", "bundleName": "light-theme", "inject": false },
+                            { "input": "src/assets/styles/template/themes/dark/theme.scss", "bundleName": "dark-theme", "inject": false }
                         ],
-                        "styles": ["src/styles.scss"],
                         "scripts": []
                     },
                     "configurations": {

@@ -22,7 +22,7 @@ public class AuthController {
   @PostMapping("/login")
   public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
     String token = this.authService.autenticacao(request.getUsername(), request.getPassword());
-    return ResponseEntity.ok(new LoginResponse(token, request.getUsername()));
+    return ResponseEntity.ok(new LoginResponse(request.getUsername(), token));
   }
 
   @PostMapping("/cadastrar")

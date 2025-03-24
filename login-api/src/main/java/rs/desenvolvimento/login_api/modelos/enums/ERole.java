@@ -5,8 +5,4 @@ public enum ERole {
   ROLE_ADMIN,
   ROLE_GESTOR
 
-  // @JsonCreator
-  // public static ERole from(String value) {
-  // return ERole.valueOf(value.toUpperCase());
-  // }
 }
