@@ -3,53 +3,53 @@ import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA } from '@ang
 @Component({
     selector: 'app-login',
     template: `
-        <!-- <section class="container">
-            <div class="left-section">
-                <div class="logo">Your Logo</div>
-                <h1 class="text-2xl">Sign in to</h1>
-                <p class="subtitle">Lorem Ipsum is simply</p>
-                <p>If you don’t have an account register</p>
-                <p>
-                    You can
-                    <a href="#">Register here !</a>
-                </p>
-                <div class="illustration">
-                    <img src="/assets/images/background-login.png" alt="Character" />
-                </div>
-            </div>
+        <header>
+            <h1>Your Logo</h1>
+        </header>
 
-            <div class="right-section">
-                <form class="login-form">
-                    <h2 class="">Sign in</h2>
-                    <input type="text" placeholder="Enter email or user name" />
-                    <input type="password" placeholder="Password" />
-                    <a href="#" class="forgot">Forgot password?</a>
-                    <button type="submit">Login</button>
-                    <p class="continue">or continue with</p>
-                    <div class="social-login">
-                        <img src="facebook-icon.png" alt="Facebook" />
-                        <img src="apple-icon.png" alt="Apple" />
-                        <img src="google-icon.png" alt="Google" />
-                    </div>
-                </form>
-            </div>
-        </section> -->
-        <section class="flex flex-column flex-1 h-screen border-1">
-            <div>
-                <span class="text-2xl">Sua Logo</span>
-            </div>
-            <div class="border-1 margin-auto">
-                <div>
-                    <h1>Sign in to</h1>
-                    <p>Lorem Ipsun is simple</p>
-                    <p>If you don't have an account register</p>
-                    <p>
-                        You can
-                        <a href="#">Register here !</a>
-                    </p>
+        <main>
+            <section class="container">
+                <div class="wrapper-container">
+                    <!-- Coluna esquerda -->
+                    <aside class="left-panel">
+                        <h2>Sign in to</h2>
+                        <p class="lorem">Lorem Ipsum is simply</p>
+
+                        <p>If you don't have an account register</p>
+                        <p>
+                            You can
+                            <a href="#">Register here !</a>
+                        </p>
+
+                        <img src="/assets/images/background-login.png" alt="Pessoa com celular" />
+                    </aside>
+
+                    <!-- Coluna direita -->
+                    <article class="right-panel">
+                        <h2>Sign in</h2>
+
+                        <form action="#" method="post">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="Enter email or user name" required />
+
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" placeholder="Password" required />
+
+                            <a href="#">Forgot password?</a>
+
+                            <button type="submit">Login</button>
+
+                            <p>or continue with</p>
+                            <div class="social-icons">
+                                <a href="#"><img src="facebook-icon.png" alt="Facebook" /></a>
+                                <a href="#"><img src="apple-icon.png" alt="Apple" /></a>
+                                <a href="#"><img src="google-icon.png" alt="Google" /></a>
+                            </div>
+                        </form>
+                    </article>
                 </div>
-            </div>
-        </section>
+            </section>
+        </main>
     `,
     styles: [' :host{display: block;}'],
     standalone: true,
