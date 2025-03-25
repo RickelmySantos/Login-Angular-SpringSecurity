@@ -95,6 +95,7 @@ export class LoginComponent {
             const { username, password } = this.loginForm.value;
             this.loginService.login(username, password).subscribe({
                 next: response => {
+                    localStorage.setItem('token', response.token);
                     alert('Login realizado com sucesso!');
                     this.router.navigate(['/home']);
                 },

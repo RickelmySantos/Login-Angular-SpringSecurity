@@ -48,7 +48,8 @@ public class SecurityFilter {
 
     http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
         .requestMatchers(mvc.pattern("auth/cadastrar")).permitAll()
-        .requestMatchers(mvc.pattern("auth/login")).permitAll().anyRequest().authenticated())
+        .requestMatchers(mvc.pattern("auth/login")).permitAll()
+        .requestMatchers(mvc.pattern("/api/auth/**")).permitAll().anyRequest().authenticated())
 
         .sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
