@@ -1,55 +1,56 @@
-import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
     selector: 'app-login',
     template: `
-        <header>
-            <h1>Your Logo</h1>
-        </header>
-
-        <main>
-            <section class="container">
-                <div class="wrapper-container">
-                    <!-- Coluna esquerda -->
-                    <aside class="left-panel">
-                        <h2>Sign in to</h2>
-                        <p class="lorem">Lorem Ipsum is simply</p>
-
-                        <p>If you don't have an account register</p>
-                        <p>
-                            You can
-                            <a href="#">Register here !</a>
-                        </p>
-
-                        <img src="/assets/images/background-login.png" alt="Pessoa com celular" />
-                    </aside>
-
-                    <!-- Coluna direita -->
-                    <article class="right-panel">
-                        <h2>Sign in</h2>
-
-                        <form action="#" method="post">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" placeholder="Enter email or user name" required />
-
-                            <label for="password">Password</label>
-                            <input type="password" id="password" name="password" placeholder="Password" required />
-
-                            <a href="#">Forgot password?</a>
-
-                            <button type="submit">Login</button>
-
-                            <p>or continue with</p>
-                            <div class="social-icons">
-                                <a href="#"><img src="facebook-icon.png" alt="Facebook" /></a>
-                                <a href="#"><img src="apple-icon.png" alt="Apple" /></a>
-                                <a href="#"><img src="google-icon.png" alt="Google" /></a>
-                            </div>
-                        </form>
-                    </article>
+        <div class="container" #container>
+            <section class="flex-container">
+                <div class="form-container sign-up-container">
+                    <form action="#">
+                        <h1>Cadastre-se</h1>
+                        <div class="social-container">
+                            <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                            <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                        <span>ou use seu email para efetuar o login</span>
+                        <input type="text" placeholder="Nome" />
+                        <input type="email" placeholder="Email" />
+                        <input type="password" placeholder="Senha" />
+                        <button>Cadastrar</button>
+                    </form>
                 </div>
+                <div class="form-container sign-in-container">
+                    <form action="#">
+                        <h1>Login</h1>
+                        <div class="social-container">
+                            <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                            <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                        <span>ou use sua conta</span>
+                        <input type="text" placeholder="Nome" />
+                        <input type="password" placeholder="Senha" />
+                        <a href="#">Esquece sua senha?</a>
+                        <button>Entrar</button>
+                    </form>
+                </div>
+                <section class="overlay-container">
+                    <div class="overlay">
+                        <div class="overlay-panel overlay-left">
+                            <h1>Bem vindo de volta!</h1>
+                            <p>Para manter-se conectado conosco, faça login com suas informações pessoais</p>
+                            <button class="ghost" id="signIn" (click)="onSignIn()">Entrar</button>
+                        </div>
+                        <div class="overlay-panel overlay-right">
+                            <h1>Olá, Amigo!</h1>
+                            <p>Insira seus dados pessoais e comece sua jornada conosco</p>
+                            <button class="ghost" id="signUp" (click)="onSignUp()">Cadastrar</button>
+                        </div>
+                    </div>
+                </section>
             </section>
-        </main>
+        </div>
     `,
     styles: [' :host{display: block;}'],
     standalone: true,
@@ -57,4 +58,13 @@ import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA } from '@ang
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     imports: [],
 })
-export class LoginComponent {}
+export class LoginComponent {
+    @ViewChild('container') container!: ElementRef;
+
+    onSignUp(): void {
+        this.container.nativeElement.classList.add('right-panel-active');
+    }
+    onSignIn(): void {
+        this.container.nativeElement.classList.remove('right-panel-active');
+    }
+}
