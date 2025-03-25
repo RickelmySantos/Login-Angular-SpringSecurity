@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,6 +31,9 @@ public class User {
   private Long id;
   @Column(unique = true, nullable = false)
   private String username;
+  @Column(unique = true, nullable = false)
+  @Email
+  private String email;
   @Column(nullable = false)
   private String password;
 

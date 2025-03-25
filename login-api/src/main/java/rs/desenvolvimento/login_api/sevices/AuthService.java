@@ -46,9 +46,10 @@ public class AuthService {
   public UserDto registrar(UserDto userDto) {
     this.verificaSeUsuarioExiste(userDto.getUsername());
 
-    Set<Roles> roles = this.roles(userDto.getRoles());
+    Set<ERole> defaultRole = Set.of(ERole.ROLE_USER);
+    Set<Roles> roles = this.roles(defaultRole);
 
-    User user = User.builder().username(userDto.getUsername())
+    User user = User.builder().username(userDto.getUsername()).email(userDto.getEmail())
         .password(this.passwordEncoder.encode(userDto.getPassword())).roles(roles).build();
     User usuarioSalvo = this.userRepository.save(user);
 
