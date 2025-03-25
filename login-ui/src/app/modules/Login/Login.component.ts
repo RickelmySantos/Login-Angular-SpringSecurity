@@ -95,7 +95,8 @@ export class LoginComponent {
             const { username, password } = this.loginForm.value;
             this.loginService.login(username, password).subscribe({
                 next: response => {
-                    console.log(response);
+                    alert('Login realizado com sucesso!');
+                    this.router.navigate(['/home']);
                 },
                 error: error => {
                     console.log(error);
